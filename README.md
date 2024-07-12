@@ -86,8 +86,8 @@ Replace `<RESOURCE>` with the resource you want to manage (e.g., `vpc`, `acm`, `
 To deploy all resources:
 ```sh
 ./script.sh all apply
-
+```
 To destroy all resources:
 ```sh 
 ./script.sh all destroy
-
+```
