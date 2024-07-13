@@ -43,8 +43,8 @@ Before you begin, ensure you have the following installed on your local machine:
     domain_name     = "reliablecloudllc.com"
     cluster_name    = "tech-challenge"
     tags = {
-      Project = "example-project"
-      Owner   = "team"
+      Project = "tech-challenge-a"
+      Owner   = "RCS"
     }
     ```
 
