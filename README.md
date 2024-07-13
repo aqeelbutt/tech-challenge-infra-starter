@@ -19,8 +19,7 @@ Before you begin, ensure you have the following installed on your local machine:
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/your-repo/aws-infrastructure.git
-    cd aws-infrastructure
+    git clone git@github.com:aqeelbutt/tech-challenge-infra-starter.git
     ```
 
 2. **Configure AWS CLI:**
