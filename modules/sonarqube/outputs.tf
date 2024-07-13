@@ -1,3 +1,3 @@
 output "sonarqube_url" {
-  value = kubernetes_service.sonarqube.status.load_balancer.ingress[0].hostname
+  value = kubernetes_service.sonarqube.status[0].load_balancer[0].ingress[0].hostname
 }

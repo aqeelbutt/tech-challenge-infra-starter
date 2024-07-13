@@ -1,3 +1,7 @@
+locals {
+  common_tags = var.tags
+}
+
 resource "helm_release" "sonarqube" {
   name       = "sonarqube"
   repository = "https://charts.bitnami.com/bitnami"

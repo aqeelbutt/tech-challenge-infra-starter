@@ -7,7 +7,8 @@ locals {
   common_tags = merge(
     var.tags,
     {
-      "Environment" = "dev"
+      "Name"        = var.domain_name
+      "Environment" = var.domain_name
       "Terraform"   = "true"
     }
   )

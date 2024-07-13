@@ -1,8 +1,12 @@
-resource "aws_vpc" {
-  cidr_block       = var.vpc_cidr
+locals {
+  common_tags = var.tags
+}
+
+resource "aws_vpc" "example" {
+  cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
   enable_dns_support   = true
-  tags             = local.common_tags
+  tags                 = local.common_tags
 }
 
 resource "aws_vpc_ipv4_cidr_block_association" "secondary" {
@@ -16,19 +20,19 @@ resource "aws_internet_gateway" "example" {
 }
 
 resource "aws_subnet" "public" {
-  count = length(var.public_subnets)
-  vpc_id     = aws_vpc.example.id
-  cidr_block = element(var.public_subnets, count.index)
+  count                   = length(var.public_subnets)
+  vpc_id                  = aws_vpc.example.id
+  cidr_block              = element(var.public_subnets, count.index)
   map_public_ip_on_launch = true
-  tags = merge(local.common_tags, { "Name" = "public-subnet-${count.index}" })
+  tags                    = merge(local.common_tags, { "Name" = "public-subnet-${count.index}" })
 }
 
 resource "aws_subnet" "private" {
-  count = length(var.private_subnets)
-  vpc_id     = aws_vpc.example.id
-  cidr_block = element(var.private_subnets, count.index)
+  count                   = length(var.private_subnets)
+  vpc_id                  = aws_vpc.example.id
+  cidr_block              = element(var.private_subnets, count.index)
   map_public_ip_on_launch = false
-  tags = merge(local.common_tags, { "Name" = "private-subnet-${count.index}" })
+  tags                    = merge(local.common_tags, { "Name" = "private-subnet-${count.index}" })
 }
 
 resource "aws_route_table" "public" {

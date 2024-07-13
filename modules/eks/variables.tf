@@ -18,6 +18,16 @@ variable "public_subnets" {
   type        = list(string)
 }
 
+variable "secondary_cidr" {
+  description = "Secondary CIDR block for EKS"
+  type        = string
+}
+
+variable "region" {
+  description = "AWS region"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to be applied to all resources"
   type        = map(string)

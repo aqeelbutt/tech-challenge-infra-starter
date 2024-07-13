@@ -1,3 +1,7 @@
+locals {
+  common_tags = var.tags
+}
+
 resource "aws_acm_certificate" "wildcard" {
   domain_name       = "*.${var.domain_name}"
   validation_method = "DNS"

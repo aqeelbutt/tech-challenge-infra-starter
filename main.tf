@@ -23,6 +23,8 @@ module "eks" {
   vpc_id         = module.vpc.vpc_id
   private_subnets = module.vpc.private_subnets
   public_subnets  = module.vpc.public_subnets
+  secondary_cidr = var.secondary_cidr
+  region         = var.region
   tags           = var.tags
 }
 
@@ -45,6 +47,14 @@ module "sagemaker" {
 
 module "sonarqube" {
   source           = "./modules/sonarqube"
+  cluster_name     = module.eks.cluster_name
+  cluster_endpoint = module.eks.cluster_endpoint
+  cluster_ca_certificate = module.eks.cluster_ca_certificate
+  tags             = var.tags
+}
+
+module "kafka" {
+  source           = "./modules/kafka"
   cluster_name     = module.eks.cluster_name
   cluster_endpoint = module.eks.cluster_endpoint
   cluster_ca_certificate = module.eks.cluster_ca_certificate

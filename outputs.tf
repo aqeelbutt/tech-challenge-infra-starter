@@ -19,5 +19,9 @@ output "jenkins_admin_password" {
 }
 
 output "jenkins_url" {
-  value = "http://${kubernetes_service.jenkins.status.load_balancer.ingress[0].hostname}:8080"
+  value = "http://${module.helm.jenkins_url}:8080"
+}
+
+output "sonarqube_url" {
+  value = module.sonarqube.sonarqube_url
 }

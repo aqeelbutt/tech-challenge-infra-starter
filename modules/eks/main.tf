@@ -1,3 +1,7 @@
+locals {
+  common_tags = var.tags
+}
+
 resource "aws_iam_role" "eks_cluster_role" {
   name = "eks_cluster_role"
 
@@ -124,7 +128,7 @@ serviceAccount:
   create: false
   name: aws-load-balancer-controller
 region: ${var.region}
-vpcId: ${aws_eks_cluster.example.vpc_id}
+vpcId: ${var.vpc_id}
 EOF
   ]
 }

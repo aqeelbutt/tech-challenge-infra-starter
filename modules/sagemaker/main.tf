@@ -1,3 +1,7 @@
+locals {
+  common_tags = var.tags
+}
+
 resource "aws_iam_role" "sagemaker_execution_role" {
   name = "sagemaker_execution_role"
 
