@@ -35,13 +35,13 @@ Before you begin, ensure you have the following installed on your local machine:
 4. **Create a `terraform.tfvars` file:**
     Update the `terraform.tfvars` file with your specific values:
     ```hcl
-    region          = "us-west-2"
+    region          = "us-east-1"
     vpc_cidr        = "10.0.0.0/16"
     secondary_cidr  = "100.64.0.0/16"
     public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
     private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
-    domain_name     = "example.com"
-    cluster_name    = "example-eks-cluster"
+    domain_name     = "reliablecloudllc.com"
+    cluster_name    = "tech-challenge"
     tags = {
       Project = "example-project"
       Owner   = "team"
