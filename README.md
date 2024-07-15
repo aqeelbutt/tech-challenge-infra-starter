@@ -27,66 +27,61 @@ Before you begin, ensure you have the following installed on your local machine:
     aws configure
     ```
 
-3. **Initialize Terraform:**
-    ```sh
-    terraform init
-    ```
-
-4. **Create a `terraform.tfvars` file:**
-    Update the `terraform.tfvars` file with your specific values:
+3. **Create `terraform.tfvars` file:**
+    Create a `terraform.tfvars` file in the root directory with your specific values:
     ```hcl
+    state_bucket_name = "rcs-tc-1"
+    state_table_name  = "rcs-tc-1"
     region          = "us-east-1"
     vpc_cidr        = "10.0.0.0/16"
     secondary_cidr  = "100.64.0.0/16"
     public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
     private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
-    domain_name     = "reliablecloudllc.com"
-    cluster_name    = "tech-challenge"
+    domain_name     = "rcs-useast1.aoi-tc.com"
+    route53_zone_id = "Z1234567890ABCDEF"
+    cluster_name    = "rcs-tech-challenge"
     tags = {
-      Project = "tech-challenge-a"
-      Owner   = "RCS"
+    Project     = "rcs-tech-challenge"
+    Owner       = "rcs"
+    Environment = "DEV"
     }
     ```
 
-## Deploying Resources
-
-You can deploy individual modules or all resources using the provided `script.sh`. The script supports `plan`, `apply`, and `destroy` actions for the following resources:
-
-- `vpc`
-- `acm`
-- `eks`
-- `helm`
-- `sagemaker`
-- `sonarqube`
-- `kafka`
-- `all` (to apply all resources)
-
-### Usage
-
-1. **Plan changes:**
+4. **Make scripts executable:**
     ```sh
-    ./script.sh <RESOURCE> plan
+    chmod +x init_backend.sh
+    chmod +x provision.sh
     ```
 
-2. **Apply changes:**
+## Running the Terraform Code
+
+1. **Initialize and apply Terraform configuration:**
+
+    This step will create the S3 bucket and DynamoDB table for state management, initialize the backend, and then apply the Terraform configuration to provision the infrastructure.
+
     ```sh
-    ./script.sh <RESOURCE> apply
+    ./init_backend.sh
     ```
 
-3. **Destroy resources:**
-    ```sh
-    ./script.sh <RESOURCE> destroy
-    ```
+### Explanation of the Scripts
 
-Replace `<RESOURCE>` with the resource you want to manage (e.g., `vpc`, `acm`, `eks`, `all`).
+#### `init_backend.sh`
 
-### Example
+This script initializes the Terraform backend using values from `terraform.tfvars` and then calls the `provision.sh` script to apply the Terraform configuration.
 
-To deploy all resources:
 ```sh
-./script.sh all apply
-```
-To destroy all resources:
-```sh 
-./script.sh all destroy
-```
+#!/bin/bash
+
+# Load variables from terraform.tfvars
+source <(grep = terraform.tfvars | sed 's/ *= */=/g')
+
+# Initialize Terraform with dynamic backend configuration
+terraform init -reconfigure \
+  -backend-config="bucket=${state_bucket_name}" \
+  -backend-config="key=terraform.tfstate" \
+  -backend-config="region=${region}" \
+  -backend-config="dynamodb_table=${state_table_name}" \
+  -backend-config="encrypt=true"
+
+# Run the provision script to apply the infrastructure
+./provision.sh
