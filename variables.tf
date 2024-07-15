@@ -28,7 +28,27 @@ variable "domain_name" {
   type        = string
 }
 
+variable "route53_zone_id" {
+  description = "Route53 Hosted Zone ID"
+  type        = string
+}
+
 variable "cluster_name" {
   description = "EKS cluster name"
+  type        = string
+}
+
+variable "tags" {
+  description = "Tags to be applied to all resources"
+  type        = map(string)
+}
+
+variable "state_bucket_name" {
+  description = "Name of the S3 bucket for Terraform state"
+  type        = string
+}
+
+variable "state_table_name" {
+  description = "Name of the DynamoDB table for Terraform state locking"
   type        = string
 }
