@@ -28,7 +28,7 @@ Before you begin, ensure you have the following installed on your local machine:
     ```
 
 3. **Create `terraform.tfvars` file:**
-    Create a `terraform.tfvars` file in the root directory with your specific values:
+    Create a `terraform.tfvars` file in the corresponding directory under the `env` directory with your own file while ensuring it doesn't conflict with the existing files:
     ```hcl
     state_bucket_name = "rcs-tc-1"
     state_table_name  = "rcs-tc-1"
@@ -67,18 +67,18 @@ Before you begin, ensure you have the following installed on your local machine:
 
 #### `init_backend.sh`
 
-This script initializes the Terraform backend using values from `terraform.tfvars` and then calls the `provision.sh` script to apply the Terraform configuration.
+This script initializes the Terraform backend using values from `env/dv/dv-terraform.tfvars` and then calls the `provision.sh` script to apply the Terraform configuration.
 
 ```sh
 #!/bin/bash
 
 # Load variables from terraform.tfvars
-source <(grep = terraform.tfvars | sed 's/ *= */=/g')
+source <(grep = env/dv/dv-terraform.tfvars | sed 's/ *= */=/g')
 
 # Initialize Terraform with dynamic backend configuration
 terraform init -reconfigure \
   -backend-config="bucket=${state_bucket_name}" \
-  -backend-config="key=terraform.tfstate" \
+  -backend-config="key=env/dv/dv-terraform.tfstate" \
   -backend-config="region=${region}" \
   -backend-config="dynamodb_table=${state_table_name}" \
   -backend-config="encrypt=true"
@@ -93,7 +93,7 @@ This script applies the Terraform configuration using the values from terraform.
 #!/bin/bash
 
 # Apply the Terraform configuration
-terraform apply -var-file=terraform.tfvars -auto-approve
+terraform apply -var-file=env/dv/dv-terraform.tfvars -auto-approve
 ```
 
 ### Accessing Deployed Resources
