@@ -105,3 +105,31 @@ You can get the Jenkins URL by running:
 terraform output jenkins_url
 ```
 
+#### SonarQube
+SonarQube will be available via a LoadBalancer URL. The admin username and password are set to admin/admin.
+
+You can get the SonarQube URL by running:
+```sh
+terraform output sonarqube_url
+```
+
+### Additional Helm Charts
+Additional applications can be deployed using Helm charts located in the helm_charts directory.
+
+### Deploying Sample Application
+To deploy the sample application using the provided Helm chart:
+```sh 
+helm install sample-app ./helm_charts/sample_app
+```
+
+#### Customizing Helm Charts
+You can customize the Helm charts by modifying the values in the `values.yaml` files located within each chart directory.
+
+### Cleanup
+To clean up and destroy all resources created by this Terraform configuration, run:
+```sh
+terraform destroy -var-file=env/dv/dv-terraform.tfvars -auto-approve
+```
+
+### Contributions
+Contributions are welcome! Please fork the repository and submit a pull request with your changes.
