@@ -85,3 +85,23 @@ terraform init -reconfigure \
 
 # Run the provision script to apply the infrastructure
 ./provision.sh
+```
+#### `provision.sh`
+This script applies the Terraform configuration using the values from terraform.tfvars
+
+```sh
+#!/bin/bash
+
+# Apply the Terraform configuration
+terraform apply -var-file=terraform.tfvars -auto-approve
+```
+
+### Accessing Deployed Resources
+### Jenkins
+Once Jenkins is deployed, you can access it using the LoadBalancer URL. The admin username and password are set to admin/admin.
+
+You can get the Jenkins URL by running:
+```sh
+terraform output jenkins_url
+```
+
