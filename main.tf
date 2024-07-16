@@ -2,13 +2,6 @@ provider "aws" {
   region = var.region
 }
 
-module "state" {
-  source      = "./modules/state"
-  bucket_name = var.state_bucket_name
-  table_name  = var.state_table_name
-  tags        = var.tags
-}
-
 module "vpc" {
   source          = "./modules/vpc"
   vpc_cidr        = var.vpc_cidr

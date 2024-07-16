@@ -38,11 +38,6 @@ variable "cluster_name" {
   type        = string
 }
 
-variable "tags" {
-  description = "Tags to be applied to all resources"
-  type        = map(string)
-}
-
 variable "state_bucket_name" {
   description = "Name of the S3 bucket for Terraform state"
   type        = string
