@@ -4,21 +4,36 @@ variable "vpc_cidr" {
 }
 
 variable "secondary_cidr" {
-  description = "Secondary CIDR block for EKS"
+  description = "Secondary CIDR block for the VPC"
   type        = string
 }
 
-variable "public_subnets" {
-  description = "Public subnet CIDR blocks"
+variable "availability_zones" {
+  description = "List of availability zones"
   type        = list(string)
 }
 
-variable "private_subnets" {
-  description = "Private subnet CIDR blocks"
-  type        = list(string)
+variable "project_name" {
+  description = "Name of the project"
+  type        = string
 }
 
 variable "tags" {
-  description = "Tags to be applied to all resources"
+  description = "Tags to apply to resources"
   type        = map(string)
+}
+
+variable "jumpbox_ami" {
+  description = "AMI ID for the jumpbox"
+  type        = string
+}
+
+variable "jumpbox_instance_type" {
+  description = "Instance type for the jumpbox"
+  type        = string
+}
+
+variable "key_name" {
+  description = "Key pair name to use for instances"
+  type        = string
 }

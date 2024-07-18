@@ -1,15 +1,18 @@
 locals {
-  common_tags = var.tags
+  common_tags = {
+    Project = var.project_name
+    Owner   = var.owner
+  }
 }
 
 resource "aws_acm_certificate" "wildcard" {
-  domain_name       = "*.${var.domain_name}"
+  domain_name       = var.domain_name
   validation_method = "DNS"
 
-  tags = local.common_tags
-
-  lifecycle {
-    create_before_destroy = true
+  tags = {
+    Project = var.project_name
+    Owner   = var.owner
+    Name    = "wildcard-certificate"
   }
 }
 
@@ -25,11 +28,13 @@ resource "aws_route53_record" "wildcard_validation" {
   zone_id = var.route53_zone_id
   name    = each.value.name
   type    = each.value.type
-  ttl     = 60
   records = [each.value.record]
+  ttl     = 60
 }
 
 resource "aws_acm_certificate_validation" "wildcard" {
   certificate_arn         = aws_acm_certificate.wildcard.arn
   validation_record_fqdns = [for record in aws_route53_record.wildcard_validation : record.fqdn]
+
+  depends_on = [aws_route53_record.wildcard_validation]
 }

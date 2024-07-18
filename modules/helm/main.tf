@@ -2,7 +2,6 @@ resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
   repository = "https://helm.nginx.com/stable"
   chart      = "nginx-ingress"
-  version    = "0.6.0"
   namespace  = "kube-system"
   values     = [
     <<EOF
@@ -14,6 +13,8 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
 EOF
   ]
+
+  depends_on = [var.eks_cluster_ready]
 }
 
 resource "helm_release" "jenkins" {
@@ -35,6 +36,8 @@ controller:
     type: LoadBalancer
 EOF
   ]
+
+  depends_on = [var.eks_cluster_ready]
 }
 
 resource "kubernetes_service" "jenkins" {
@@ -54,6 +57,8 @@ resource "kubernetes_service" "jenkins" {
       target_port = 8080
     }
   }
+
+  depends_on = [var.eks_cluster_ready]
 }
 
 resource "kubernetes_service_account" "jenkins" {
@@ -61,6 +66,8 @@ resource "kubernetes_service_account" "jenkins" {
     name      = "jenkins"
     namespace = "default"
   }
+
+  depends_on = [var.eks_cluster_ready]
 }
 
 resource "kubernetes_cluster_role_binding" "jenkins" {
@@ -79,6 +86,8 @@ resource "kubernetes_cluster_role_binding" "jenkins" {
     name      = kubernetes_service_account.jenkins.metadata[0].name
     namespace = kubernetes_service_account.jenkins.metadata[0].namespace
   }
+
+  depends_on = [kubernetes_service_account.jenkins]
 }
 
 resource "kubernetes_job" "jenkins_config" {
@@ -127,6 +136,8 @@ resource "kubernetes_job" "jenkins_config" {
 
     backoff_limit = 4
   }
+
+  depends_on = [kubernetes_service_account.jenkins]
 }
 
 resource "kubernetes_persistent_volume_claim" "jenkins" {
@@ -143,4 +154,6 @@ resource "kubernetes_persistent_volume_claim" "jenkins" {
       }
     }
   }
+
+  depends_on = [var.eks_cluster_ready]
 }

@@ -12,3 +12,13 @@ variable "tags" {
   description = "Tags to be applied to all resources"
   type        = map(string)
 }
+
+variable "private_subnet_cidrs" {
+  description = "CIDR blocks of the private subnets"
+  type        = list(string)
+}
+
+variable "cluster_name" {
+  description = "EKS cluster name"
+  type        = string
+}

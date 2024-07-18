@@ -1,3 +1,8 @@
+variable "eks_cluster_ready" {
+  description = "Signal to indicate EKS cluster is ready"
+  type        = string
+}
+
 variable "cluster_name" {
   description = "EKS cluster name"
   type        = string
@@ -14,12 +19,12 @@ variable "cluster_ca_certificate" {
 }
 
 variable "acm_certificate_arn" {
-  description = "ACM certificate ARN"
+  description = "ARN of the ACM certificate"
   type        = string
 }
 
 variable "domain_name" {
-  description = "Domain name"
+  description = "Domain name for the applications"
   type        = string
 }
 

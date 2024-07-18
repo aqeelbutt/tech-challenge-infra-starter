@@ -14,6 +14,16 @@ variable "cluster_ca_certificate" {
 }
 
 variable "tags" {
-  description = "Tags to be applied to all resources"
+  description = "Tags to apply to resources"
   type        = map(string)
+}
+
+variable "domain_name" {
+  description = "Domain name for SonarQube ingress"
+  type        = string
+}
+
+variable "certificate_arn" {
+  description = "ACM certificate ARN"
+  type        = string
 }

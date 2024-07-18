@@ -1,0 +1,8 @@
+kafka:
+  replicas: 3
+  listeners:
+    external:
+      type: loadbalancer
+      tls: true
+      authentication:
+        type: scram-sha-512
