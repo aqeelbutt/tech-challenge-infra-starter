@@ -1,5 +1,5 @@
 output "sagemaker_notebook_instance_name" {
-  value = aws_sagemaker_notebook_instance.example.name
+  value = aws_sagemaker_notebook_instance.rcs-tc.name
 }
 
 output "sagemaker_execution_role_arn" {

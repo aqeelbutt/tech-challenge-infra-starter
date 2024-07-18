@@ -18,12 +18,12 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "domain_name" {
-  description = "Domain name for Kafka ingress"
+variable "certificate_arn" {
+  description = "ACM certificate ARN"
   type        = string
 }
 
-variable "certificate_arn" {
-  description = "ACM certificate ARN"
+variable "domain_name" {
+  description = "Domain name for ingress"
   type        = string
 }

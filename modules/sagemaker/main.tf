@@ -48,27 +48,28 @@ resource "aws_iam_role_policy" "sagemaker_policy" {
 }
 
 resource "aws_security_group" "sagemaker_security_group" {
+  name   = "${var.cluster_name}-sagemaker-sg"
   vpc_id = var.vpc_id
-
-  ingress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   egress {
     from_port   = 0
-    to_port     = 65535
+    to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = local.common_tags
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = var.private_subnet_cidrs
+  }
+
+  tags = var.tags
 }
 
-resource "aws_sagemaker_notebook_instance" "example" {
-  name                 = "example-notebook-instance"
+resource "aws_sagemaker_notebook_instance" "rcs-tc" {
+  name                 = "${var.cluster_name}-notebook"
   instance_type        = "ml.t2.medium"
   role_arn             = aws_iam_role.sagemaker_execution_role.arn
   security_groups      = [aws_security_group.sagemaker_security_group.id]

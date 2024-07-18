@@ -1,0 +1,3 @@
+sonarProperties:
+  sonar.projectKey: "${cluster_name}-sonarqube"
+  sonar.projectName: "${cluster_name}-sonarqube"

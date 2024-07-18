@@ -7,7 +7,7 @@ output "eks_cluster_name" {
 }
 
 output "acm_certificate_arn" {
-  value = module.acm.certificate_arn
+  value = module.acm.acm_certificate_arn
 }
 
 output "jenkins_admin_username" {
@@ -18,10 +18,14 @@ output "jenkins_admin_password" {
   value = "adminPassword"
 }
 
-output "jenkins_url" {
-  value = "http://${module.helm.jenkins_url}:8080"
+output "eks_cluster_ready" {
+  value = module.eks.eks_cluster_ready
 }
 
-output "sonarqube_url" {
-  value = module.sonarqube.sonarqube_url
+output "cluster_ca_certificate" {
+  value = module.eks.cluster_ca_certificate
+}
+
+output "cluster_name" {
+  value = module.eks.cluster_name
 }

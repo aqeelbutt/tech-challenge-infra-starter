@@ -1,14 +1,24 @@
 variable "domain_name" {
-  description = "Domain name for ACM certificate"
+  description = "The domain name to use for the ACM certificate"
+  type        = string
+}
+
+variable "route53_zone_id" {
+  description = "The Route 53 hosted zone ID"
   type        = string
 }
 
 variable "tags" {
-  description = "Tags to be applied to all resources"
+  description = "Tags to apply to resources"
   type        = map(string)
 }
 
-variable "route53_zone_id" {
-  description = "Route53 Hosted Zone ID"
+variable "project_name" {
+  description = "Project name for tagging"
+  type        = string
+}
+
+variable "owner" {
+  description = "Owner for tagging"
   type        = string
 }

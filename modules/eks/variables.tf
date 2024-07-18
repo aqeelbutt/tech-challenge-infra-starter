@@ -8,13 +8,13 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "private_subnets" {
-  description = "Private subnet IDs"
+variable "public_subnets" {
+  description = "Public subnets for EKS"
   type        = list(string)
 }
 
-variable "public_subnets" {
-  description = "Public subnet IDs"
+variable "private_subnets" {
+  description = "Private subnets for EKS"
   type        = list(string)
 }
 
@@ -29,6 +29,27 @@ variable "region" {
 }
 
 variable "tags" {
-  description = "Tags to be applied to all resources"
+  description = "Tags to apply to resources"
   type        = map(string)
+}
+
+variable "instance_type" {
+  description = "Instance type for the EKS node group"
+  type        = string
+}
+
+variable "key_name" {
+  description = "Key pair name to use for EKS node group"
+  type        = string
+  default     = ""
+}
+
+variable "domain_name" {
+  description = "The domain name for the ACM certificate"
+  type        = string
+}
+
+variable "certificate_arn" {
+  description = "The ARN of the ACM certificate"
+  type        = string
 }
